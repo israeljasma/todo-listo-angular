@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tarea, EstadoTarea } from './tarea';
 import { TareaService } from './tarea.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -12,19 +13,27 @@ export class AppComponent implements OnInit {
   title = 'Todo Listo!';
   estadoTareas = EstadoTarea;
   tareaSeleccionada: Tarea;
-  tareas: Array<Tarea>;
+  tareas: any;
   newTarea: Tarea;
+  domain: string = 'http://127.0.0.1:8000';
 
-  constructor(public tareaService: TareaService) {
+  constructor(public tareaService: TareaService, private httpClient: HttpClient) {
     this.tareas = [];
     this.newTarea = new Tarea(null, null, null);
   }
 
   ngOnInit() {
-    this.tareaService.getTareas()
-        .subscribe((ts: Array<Tarea>) => {
-          this.tareas = ts;
-        });
+    // this.tareaService.getTareas()
+    //     .subscribe((ts: Array<Tarea>) => {
+    //       this.tareas = ts;
+    //     });
+    this.getTareas();
+  }
+
+  getTareas() {
+    this.httpClient.get(`${this.domain}/tareas/`).subscribe(data => {
+      this.tareas = data;
+    });
   }
 
   actualizarTarea(t: Tarea) {
