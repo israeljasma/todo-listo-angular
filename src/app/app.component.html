@@ -33,7 +33,33 @@
               class="alert alert-danger">
               La descripcion debe tener entre 10 y 100 caracteres
             </div>
-            
+            <div class="form-group">
+              <label for="estado">
+                  Estado
+              </label>
+              <select #estado="ngModel"
+                      [(ngModel)]="newTarea.estado"
+                      class="form-control"
+                      required
+                      name="estado">
+                  <option value="" selected disabled> Estado Tarea </option>
+                  <option value="0">Creada</option>
+                  <option value="1">En Proceso</option>
+                  <option value="2">Terminada</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="fecha_inicio">Fecha Inicio</label>
+              <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio"
+              [ngModel]="newTarea.fecha_inicio">
+            </div>
+
+            <div class="form-group">
+              <label for="fecha_termino">Fecha Inicio</label>
+              <input type="date" class="form-control" id="fecha_termino" name="fecha_termino"
+              [ngModel]="newTarea.fecha_termino">
+            </div>
 
             <button [disabled]="f.invalid"
                     type="submit"

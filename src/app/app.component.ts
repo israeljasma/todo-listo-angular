@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   constructor(public tareaService: TareaService, private httpClient: HttpClient) {
     this.tareas = [];
-    this.newTarea = new Tarea(null, null, null);
+    this.newTarea = new Tarea(null, null, null, null);
   }
 
   ngOnInit() {
@@ -45,8 +45,9 @@ export class AppComponent implements OnInit {
   }
 
   crearTarea() {
-    console.log(this.newTarea);
-    this.tareaService.crearTarea(this.newTarea);
+    this.httpClient.post(`${this.domain}/tareas/`, this.newTarea).subscribe(data=>{
+    });
+    location.reload();
   }
 
   estado2str(e: EstadoTarea) {
