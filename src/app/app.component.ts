@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   tareaSeleccionada: Tarea;
   tareas: any;
   newTarea: Tarea;
+  estadosTareas: any;
   domain: string = 'http://127.0.0.1:8000';
 
   constructor(public tareaService: TareaService, private httpClient: HttpClient) {
@@ -28,11 +29,18 @@ export class AppComponent implements OnInit {
     //       this.tareas = ts;
     //     });
     this.getTareas();
+    this.getEstados();
   }
 
   getTareas() {
     this.httpClient.get(`${this.domain}/tareas/`).subscribe(data => {
       this.tareas = data;
+    });
+  }
+
+  getEstados() {
+    this.httpClient.get(`${this.domain}/estados/`).subscribe(data => {
+      this.estadosTareas = data;
     });
   }
 
@@ -45,14 +53,14 @@ export class AppComponent implements OnInit {
   }
 
   crearTarea() {
-    this.httpClient.post(`${this.domain}/tareas/`, this.newTarea).subscribe(data=>{
+    this.httpClient.post(`${this.domain}/tareas/`, this.newTarea).subscribe(data => {
     });
     location.reload();
   }
 
   estado2str(e: EstadoTarea) {
     switch (e) {
-      case EstadoTarea.Creada:    return 'Creada';
+      case EstadoTarea.Creada: return 'Creada';
       case EstadoTarea.EnProceso: return 'En Proceso';
       case EstadoTarea.Terminada: return 'Terminada';
     }

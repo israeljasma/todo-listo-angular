@@ -1,5 +1,4 @@
 <app-layout>
-
   <div class="row">
     <div class="col-md-4" style="border: 1px solid black;">
         <form (ngSubmit)="crearTarea()" #f="ngForm">        
@@ -43,9 +42,7 @@
                       required
                       name="estado">
                   <option value="" selected disabled> Estado Tarea </option>
-                  <option value="0">Creada</option>
-                  <option value="1">En Proceso</option>
-                  <option value="2">Terminada</option>
+                  <option *ngFor="let e of estadosTareas;" value="{{e.id}}">{{e.nombre}}</option>
               </select>
             </div>
 
