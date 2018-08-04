@@ -67,13 +67,19 @@
     </div>
 
     <div class="col-md-8" style="border: 1px solid black;">
+
+        <input type="text" class="form-control" 
+          name="searchString" placeholder="Type to search..." 
+          [(ngModel)]="searchText">
+
         <table class="table">
           <tr>
             <th>#</th>
             <th>Titulo</th>
             <th>Estado</th>
+            <th>Acciones</th>
           </tr>
-          <tr *ngFor="let t of tareas;"
+          <tr *ngFor="let t of tareasMostradas | filter : searchText"
             [class.selected]="t === tareaSeleccionada">
             <td>{{ t.id }}</td>
             <td>
@@ -83,6 +89,7 @@
               </a>
             </td>
             <td>{{ estado2str(t.estado) }}</td>
+            <td><a href="editar/{{t.id}}"><button type="button" class="btn btn-success">Editar</button></a></td>
           </tr>
         </table>
     </div>

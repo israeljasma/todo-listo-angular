@@ -8,13 +8,15 @@ import { AppComponent } from './app.component';
 import { TareaCreadaComponent } from './tarea-creada/tarea-creada.component';
 import { TareaEnProcesoComponent } from './tarea-en-proceso/tarea-en-proceso.component';
 import { TareaTerminadaComponent } from './tarea-terminada/tarea-terminada.component';
+import { FilterPipe } from './filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     TareaCreadaComponent,
     TareaEnProcesoComponent,
-    TareaTerminadaComponent
+    TareaTerminadaComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

@@ -12,12 +12,19 @@ import { TareaService } from './tarea.service';
 export class AppComponent implements OnInit{
 
   title = 'Todo Listo';
-  estadoTareas : EstadoTarea;
+  estadoTareas = EstadoTarea;
   tareaSeleccionada: Tarea;
   tareas: Array<Tarea>;
   newTarea: Tarea;
   estadosTareas: any;
+  tareasMostradas: Array<Tarea>;
+
   
+  filtrarTareas() {
+    this.tareasMostradas = this.tareas.filter(t => t.titulo);
+    // this.tareasMostradas = this.tareas.filter(t => t.titulo.startsWith('a') );
+  }
+
   constructor(public tareaService: TareaService){
     this.tareas =[];
     this.newTarea = new Tarea(null, null, null, null);
@@ -25,7 +32,7 @@ export class AppComponent implements OnInit{
  
   ngOnInit(){
     this.tareaService.getTareas()
-    .subscribe((ts: Array<Tarea>) => { this.tareas = ts;} 
+    .subscribe((ts: Array<Tarea>) => { this.tareas = ts; this.filtrarTareas();}
     );
 
     this.getEstados();
@@ -41,6 +48,16 @@ export class AppComponent implements OnInit{
   crearTarea(){
     console.log(this.newTarea);
     this.tareaService.crearTarea(this.newTarea).subscribe(
+      response => { ts => {
+        this.tareaService.push(ts);
+      }},
+      error => console.log('error', error)
+    );
+  }
+
+  editarTarea(){
+    console.log(this.newTarea);
+    this.tareaService.editarTarea(this.newTarea, this.newTarea.id).subscribe(
       response => { ts => {
         this.tareaService.push(ts);
       }},
