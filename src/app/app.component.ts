@@ -38,6 +38,17 @@ export class AppComponent implements OnInit{
     this.getEstados();
   }
 
+  updateTarea(t: Tarea) {
+    this.tareaService.updateTarea(t).subscribe(
+      response => {
+        ts => {
+          this.tareaService.push(ts);
+        }
+      },
+      error => console.log('error', error)
+    );
+  }
+
   actualizarTarea(t: Tarea) {
   }
 
