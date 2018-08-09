@@ -65,16 +65,6 @@ export class AppComponent implements OnInit{
       error => console.log('error', error)
     );
   }
-
-  editarTarea(){
-    console.log(this.newTarea);
-    this.tareaService.editarTarea(this.newTarea, this.newTarea.id).subscribe(
-      response => { ts => {
-        this.tareaService.push(ts);
-      }},
-      error => console.log('error', error)
-    );
-  }
   
   getEstados() {
     this.tareaService.getEstados().subscribe(data => {
