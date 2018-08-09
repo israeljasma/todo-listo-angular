@@ -27,9 +27,14 @@ export class TareaService {
   getEstados(): Observable<any>{
     return this.httpClient.get<Array<any>>(this.domainEstados);
   }
+  
   crearTarea(t: Tarea): Observable<any> {
     location.reload();
     return this.httpClient.post<Tarea>(this.domainTareas, t);
+  }
+  
+  updateTarea(t: Tarea): Observable<any>{
+    return this.httpClient.put<Tarea>(`${this.domainTareas}${t.id}/`, t);
   }
 
 // crearTarea(t: Tarea): Observable<any> {
