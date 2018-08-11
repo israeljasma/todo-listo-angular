@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Tarea, EstadoTarea } from './tarea';
 import { TareaService } from './tarea.service';
 
@@ -9,7 +9,7 @@ import { TareaService } from './tarea.service';
 
 })
 
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   title = 'Todo Listo';
   estadoTareas = EstadoTarea;
@@ -19,27 +19,57 @@ export class AppComponent implements OnInit{
   estadosTareas: any;
   tareasMostradas: Array<Tarea>;
 
-  
+
   filtrarTareas() {
     this.tareasMostradas = this.tareas.filter(t => t.titulo);
     // this.tareasMostradas = this.tareas.filter(t => t.titulo.startsWith('a') );
   }
 
-  constructor(public tareaService: TareaService){
-    this.tareas =[];
+  constructor(public tareaService: TareaService) {
+    this.tareas = [];
     this.newTarea = new Tarea(null, null, null, null);
   }
- 
-  ngOnInit(){
+
+  ngOnInit() {
     this.tareaService.getTareas()
-    .subscribe((ts: Array<Tarea>) => { this.tareas = ts; this.filtrarTareas();}
-    );
+      .subscribe((ts: Array<Tarea>) => { this.tareas = ts; this.filtrarTareas(); }
+      );
 
     this.getEstados();
   }
 
-  updateTarea(t: Tarea) {
-    this.tareaService.updateTarea(t).subscribe(
+  // updateTarea(t: Tarea) {
+  //   this.tareaService.updateTarea(t).subscribe(
+  //     response => {
+  //       ts => {
+  //         this.tareaService.push(ts);
+  //       }
+  //     },
+  //     error => console.log('error', error)
+  //   );
+  // }
+
+  actualizarTarea(t: Tarea) {
+  }
+
+  seleccionarTarea(t: Tarea) {
+    this.tareaSeleccionada = t;
+  }
+
+  deleteTarea(t: Tarea) {
+    this.tareaService.deleteTarea(t).subscribe(
+      response => {
+        ts => {
+          this.tareaService.deleteTarea(ts);
+        }
+      },
+      error => console.log('error', error)
+    );
+  }
+
+  crearTarea() {
+    console.log(this.newTarea);
+    this.tareaService.crearTarea(this.newTarea).subscribe(
       response => {
         ts => {
           this.tareaService.push(ts);
@@ -49,23 +79,6 @@ export class AppComponent implements OnInit{
     );
   }
 
-  actualizarTarea(t: Tarea) {
-  }
-
-  seleccionarTarea(t: Tarea){
-    this.tareaSeleccionada= t;
-  }
-  
-  crearTarea(){
-    console.log(this.newTarea);
-    this.tareaService.crearTarea(this.newTarea).subscribe(
-      response => { ts => {
-        this.tareaService.push(ts);
-      }},
-      error => console.log('error', error)
-    );
-  }
-  
   getEstados() {
     this.tareaService.getEstados().subscribe(data => {
       this.estadosTareas = data;
@@ -75,7 +88,7 @@ export class AppComponent implements OnInit{
 
   estado2str(e: EstadoTarea) {
     switch (e) {
-      case EstadoTarea.Creada:    return 'Creada';
+      case EstadoTarea.Creada: return 'Creada';
       case EstadoTarea.EnProceso: return 'En Proceso';
       case EstadoTarea.Terminada: return 'Terminada';
     }

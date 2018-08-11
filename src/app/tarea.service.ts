@@ -37,6 +37,11 @@ export class TareaService {
     return this.httpClient.put<Tarea>(`${this.domainTareas}${t.id}/`, t);
   }
 
+  deleteTarea(t: Tarea): Observable<any>{
+    location.reload();
+    return this.httpClient.delete<Tarea>(`${this.domainTareas}${t.id}/`);
+  }
+
 // crearTarea(t: Tarea): Observable<any> {
 //     // Obtener maximo id en this.tareas e incrementar en 1 para el nuevo id
 //     const newId = Math.max.apply(null, this.tareas.map(x => x.id)) + 1;
